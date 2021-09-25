@@ -50,7 +50,7 @@ CREATE TABLE accounts (
    account_id SERIAL,
    username TEXT NOT NULL UNIQUE,
    password TEXT NOT NULL,
-   PRIMARY KEY(account_id),
+   PRIMARY KEY(account_id)
    customer_id INT NOT NULL UNIQUE
 );
 
