@@ -22,16 +22,15 @@ CREATE TABLE categories (
     category_id SERIAL,
     category_name TEXT NOT NULL,
     category_description TEXT,
-    picture TEXT,
+    picture TEXT, /* store pic as text for url or long text file */
     PRIMARY KEY(category_id)
-    /* doesn't need product_id */
 );
 
 CREATE TABLE suppliers (
     supplier_id SERIAL,
     supplier_name TEXT NOT NULL,
     PRIMARY KEY(supplier_id),
-    product_id INT NOT NULL /* because I decided supplier must have at least 1 product */
+    product_id INT NOT NULL /* because supplier should supply at least 1 product */
 );
 
 CREATE TABLE products (
@@ -64,7 +63,6 @@ CREATE TABLE customers (
     customer_id SERIAL,
     customer_name TEXT NOT NULL,
     PRIMARY KEY(customer_id)
-    /* doesn't need order_id */
 );
 
 CREATE TABLE shippers (
@@ -72,7 +70,6 @@ CREATE TABLE shippers (
     shipper_name TEXT NOT NULL,
     shipper_phone TEXT,
     PRIMARY KEY(shipper_id)
-    /* doesnt need order_id */
 );
 
 CREATE TABLE employees (
@@ -80,8 +77,8 @@ CREATE TABLE employees (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     PRIMARY KEY(employee_id),
-    reports_to TEXT, /* should this be an employee id? */
-    order_id INT NOT NULL
+    reports_to TEXT, /* for supervisor name or employee_id */
+    order_id INT NOT NULL /* because works on orders - assumed 1 or more */
 );
 
 CREATE TABLE territories (
@@ -101,7 +98,7 @@ CREATE TABLE regions (
     region_id SERIAL,
     region_description TEXT,
     PRIMARY KEY(region_id),
-    territory_id INT NOT NULL
+    territory_id INT NOT NULL /* has territories - means 1 or more */
 );
 
 CREATE TABLE states (
