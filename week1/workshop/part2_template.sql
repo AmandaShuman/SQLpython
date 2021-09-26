@@ -29,8 +29,7 @@ CREATE TABLE categories (
 CREATE TABLE suppliers (
     supplier_id SERIAL,
     supplier_name TEXT NOT NULL,
-    PRIMARY KEY(supplier_id),
-    product_id INT NOT NULL /* because supplier should supply at least 1 product */
+    PRIMARY KEY(supplier_id)
 );
 
 CREATE TABLE products (
@@ -38,7 +37,7 @@ CREATE TABLE products (
     product_name TEXT NOT NULL,
     discontinued BOOLEAN NOT NULL, /* can only be 0 or 1 */
     PRIMARY KEY(product_id),
-    supplier_id INT,
+    supplier_id INT NOT NULL, /* because supplier should supply at least 1 product */
     category_id INT
 );
 
@@ -78,14 +77,13 @@ CREATE TABLE employees (
     last_name TEXT NOT NULL,
     PRIMARY KEY(employee_id),
     reports_to TEXT, /* for supervisor name or employee_id */
-    order_id INT NOT NULL /* because works on orders - assumed 1 or more */
 );
 
 CREATE TABLE territories (
     territory_id SERIAL,
     territory_description TEXT NOT NULL,
     PRIMARY KEY(territory_id),
-    region_id INT NOT NULL
+    region_id INT NOT NULL 
 );
 
 CREATE TABLE employees_territories (
@@ -97,8 +95,7 @@ CREATE TABLE employees_territories (
 CREATE TABLE regions (
     region_id SERIAL,
     region_description TEXT,
-    PRIMARY KEY(region_id),
-    territory_id INT NOT NULL /* has territories - means 1 or more */
+    PRIMARY KEY(region_id)
 );
 
 CREATE TABLE states (
@@ -164,18 +161,8 @@ ADD CONSTRAINT fk_employees_territories_territories
 FOREIGN KEY (territory_id)
 REFERENCES territories;
 
-/* for participates 1 or more times */
-ALTER TABLE suppliers
-ADD CONSTRAINT fk_suppliers_products
-FOREIGN KEY (product_id)
-REFERENCES products;
-
+/* I'm not sure about this one */
 ALTER TABLE employees
-ADD CONSTRAINT fk_employees_orders
-FOREIGN KEY (order_id)
-REFERENCES orders;
-
-ALTER TABLE regions
-ADD CONSTRAINT fk_regions_territories
-FOREIGN KEY (territory_id)
-REFERENCES territories;
+ADD CONSTRAINT fk_supervisors
+FOREIGN KEY (reports_to)
+REFERENCES employees;
