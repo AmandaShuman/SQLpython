@@ -76,7 +76,7 @@ CREATE TABLE employees (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     PRIMARY KEY(employee_id),
-    reports_to TEXT, /* for supervisor name or employee_id */
+    reports_to INT, /* for supervisor employee_id */
 );
 
 CREATE TABLE territories (
