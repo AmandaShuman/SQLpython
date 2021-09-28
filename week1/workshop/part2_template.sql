@@ -35,7 +35,7 @@ CREATE TABLE suppliers (
 CREATE TABLE products (
     product_id SERIAL,
     product_name TEXT NOT NULL,
-    discontinued BOOLEAN NOT NULL, /* can only be 0 or 1 */
+    SMALLINT CHECK (discontinued BETWEEN 0 AND 1) NOT NULL, /* can only be 0 or 1 */
     PRIMARY KEY(product_id),
     supplier_id INT NOT NULL, /* because supplier should supply at least 1 product */
     category_id INT
