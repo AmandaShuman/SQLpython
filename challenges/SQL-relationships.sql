@@ -4,20 +4,20 @@
 
 CREATE TABLE persons (
     person_id SERIAL PRIMARY KEY,
-    first_name TEXT NON NULL,
+    first_name TEXT NOT NULL,
     middle_name TEXT,
-    last_name TEXT NON NULL,
+    last_name TEXT NOT NULL,
     birth_date TIMESTAMP,
 );
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    password TEXT NON NULL,
-    username TEXT NON NULL UNIQUE,
+    password TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
     email character varying(320), /* 64 char for username, 1 char for @, and 255 char for domain name */
     cell_phone character varying(24),
-    FOREIGN KEY(person_id) INT UNIQUE 
-    REFERENCES persons(person_id) 
+    person_id INT UNIQUE NOT NULL,
+    FOREIGN KEY(person_id) REFERENCES persons(person_id) 
 ); 
 
 /* One to many table */
@@ -25,18 +25,19 @@ CREATE TABLE users (
 /* players can be on at most one team, but team has many players */
 CREATE TABLE teams (
     team_id SERIAL PRIMARY KEY,
-    team_name TEXT NON NULL,
+    team_name TEXT NOT NULL,
     mascot TEXT,
     sport TEXT
 );
 
 CREATE TABLE players (
     player_id SERIAL PRIMARY KEY,
-    first_name TEXT NON NULL,
+    first_name TEXT NOT NULL,
     middle_name TEXT,
-    last_name TEXT NON NULL,
+    last_name TEXT NOT NULL,
     birth_date TIMESTAMP,
-    role TEXT NON NULL,
+    role TEXT NOT NULL,
+    team_id TEXT NOT NULL,
     CONSTRAINT fk_player_team FOREIGN KEY (team_id) REFERENCES teams(team_id)
 );
 
@@ -45,24 +46,26 @@ CREATE TABLE players (
 
 CREATE TABLE subjects (
     subject_id SERIAL PRIMARY KEY,
-    course_name TEXT NON NULL,
-    course_number INT NON NULL,
+    course_name TEXT NOT NULL,
+    course_number INT NOT NULL,
     max_size INT,
     prereqs TEXT
 );
 
 CREATE TABLE students (
     student_id SERIAL PRIMARY KEY,
-    first_name TEXT NON NULL,
+    first_name TEXT NOT NULL,
     middle_name TEXT,
-    last_name TEXT NON NULL,
+    last_name TEXT NOT NULL,
     birth_date TIMESTAMP,
-    stu_year TEXT NON NULL,
+    stu_year TEXT NOT NULL,
     major TEXT
 );
 
 CREATE TABLE students_subjects (
-    subject_id INT NON NULL,
-    student_id INT NON NULL,
-    PRIMARY KEY (subject_id, student_id)
+    subject_id INT NOT NULL,
+    student_id INT NOT NULL,
+    PRIMARY KEY (subject_id, student_id),
+    CONSTRAINT fk_students_subjects_subjects FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
+    CONSTRAINT fk_students_subjects_students FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
