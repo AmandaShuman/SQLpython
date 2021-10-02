@@ -66,6 +66,6 @@ CREATE TABLE students_subjects (
     subject_id INT NOT NULL,
     student_id INT NOT NULL,
     PRIMARY KEY (subject_id, student_id),
-    CONSTRAINT fk_students_subjects_subjects FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
-    CONSTRAINT fk_students_subjects_students FOREIGN KEY (student_id) REFERENCES students(student_id)
+    CONSTRAINT fk_class FOREIGN KEY (subject_id) REFERENCES subjects(subject_id),
+    CONSTRAINT fk_student_enrollment FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
