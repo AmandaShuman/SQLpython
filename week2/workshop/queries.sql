@@ -93,6 +93,7 @@ ORDER BY order_total DESC LIMIT 50;
 
 -- 3.1 What are first and last name of each Sales Representative? Order by last name.
 SELECT e.first_name, e.last_name FROM employees e
+WHERE e.title = 'Sales Representative'
 ORDER BY e.last_name;
 
 -- 3.2 Get first name, last name, and notes for employees who don't have anyone to report to (i.e. their reports_to field is blank). Order by last name.
@@ -135,7 +136,10 @@ ORDER BY e.hire_date;
 -- Part 4: Mix and Match
 
 -- 4.1 List product names that begin with the letter 'C' and their corresponding category names. Order by product ID.
-SELECT p.product_name, p.category_id FROM products p
+SELECT p.product_name, ca.category_name 
+FROM products p
+JOIN categories ca 
+ON p.category_id = ca.category_id
 WHERE p.product_name LIKE 'C%'
 ORDER BY p.product_id;
 
