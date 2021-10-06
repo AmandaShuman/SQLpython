@@ -1,0 +1,16 @@
+---
+--- movie_viewer
+---
+
+DROP DATABASE IF EXISTS movies;
+CREATE DATABASE movies;
+\c movies
+
+DROP TABLE IF EXISTS trailers;
+DROP TABLE IF EXISTS formats;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS awards;
+DROP TABLE IF EXISTS directors;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS users;
