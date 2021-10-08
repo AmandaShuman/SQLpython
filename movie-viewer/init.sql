@@ -39,12 +39,24 @@ CREATE TABLE movies_trailers (
     CONSTRAINT fk_trailer FOREIGN KEY (trailer_id) REFERENCES trailers(trailer_id),
     CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
 );
+
 --
 -- Name: formats; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
 CREATE TABLE formats (
     format_id SERIAL PRIMARY KEY,
     extension TEXT NOT NULL,
+)
+
+--
+-- Name: resolutions; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE resolutions (
+    resolution_id SERIAL PRIMARY KEY,
+    resolution TEXT NOT NULL,
+    pixel_size TEXT NOT NULL,
+    aspect_ratio TEXT NOT NULL,
+    num_p TEXT
 )
 
 --
@@ -74,7 +86,9 @@ CREATE TABLE movies (
     movie_id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     year INT NOT NULL,
-    length TEXT NOT NULL
+    length TEXT NOT NULL,
+    format_id INT NOT NULL,
+    CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id)
 );
 
 --
@@ -84,3 +98,12 @@ CREATE TABLE movies (
 -- Insert records
 INSERT INTO formats (extension) VALUES
 (MP4), (MOV), (WMV), (AVI), (FLV), (F4V), (SWF), (MKV), (WEBM), (HTML5), (MPEG-2);
+
+INSERT INTO resolutions VALUES
+('SD (Standard Definition)', '640 x 480', '4:3', '480p'),
+('HD (High Definition)', '1280 x 720', '16:9', '720p'),
+('Full HD (FHD)', '1920 x 1080', '16:9', '1080p'),
+('QHD (Quad HD)', '2560 x 1440', '16:9', '1440p'),
+('2K', '2048 x 1080', '1:1.77', '1080p'),
+('4K (Ultra HD)', '3840 x 2160', '1:1.9', '2160p'),
+('8K (Full Ultra HD)', '7680 x 4320', '16:9', '4320p')

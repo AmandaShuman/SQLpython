@@ -37,7 +37,7 @@ CREATE TABLE players (
     last_name TEXT NOT NULL,
     birth_date TIMESTAMP,
     role TEXT NOT NULL,
-    team_id TEXT NOT NULL,
+    team_id INT NOT NULL,
     CONSTRAINT fk_player_team FOREIGN KEY (team_id) REFERENCES teams(team_id)
 );
 
