@@ -9,7 +9,6 @@ CREATE DATABASE movies;
 DROP TABLE IF EXISTS trailers;
 DROP TABLE IF EXISTS movies_trailers;
 DROP TABLE IF EXISTS formats;
-DROP TABLE IF EXISTS movies_formats;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS movies_actors;
 DROP TABLE IF EXISTS genres;
@@ -81,3 +80,7 @@ CREATE TABLE movies (
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
+
+-- Insert records
+INSERT INTO formats (extension) VALUES
+(MP4), (MOV), (WMV), (AVI), (FLV), (F4V), (SWF), (MKV), (WEBM), (HTML5), (MPEG-2);
