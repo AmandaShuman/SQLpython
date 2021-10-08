@@ -9,6 +9,7 @@ CREATE DATABASE movies;
 DROP TABLE IF EXISTS trailers;
 DROP TABLE IF EXISTS movies_trailers;
 DROP TABLE IF EXISTS formats;
+DROP TABLE IF EXISTS resolutions;
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS movies_actors;
 DROP TABLE IF EXISTS genres;
@@ -46,7 +47,7 @@ CREATE TABLE movies_trailers (
 CREATE TABLE formats (
     format_id SERIAL PRIMARY KEY,
     extension TEXT NOT NULL,
-)
+);
 
 --
 -- Name: resolutions; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
@@ -57,12 +58,29 @@ CREATE TABLE resolutions (
     pixel_size TEXT NOT NULL,
     aspect_ratio TEXT NOT NULL,
     num_p TEXT
-)
+);
 
 --
 -- Name: actors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
+CREATE TABLE actors (
+    actor_id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    gender TEXT,
+    birth_date DATE
+);
 
+--
+-- Name: movies_actors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movies_actors (
+    actor_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(actor_id, movie_id),
+    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES actors(actor_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
 
 --
 -- Name: genres; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
