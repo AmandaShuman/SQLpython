@@ -2,8 +2,8 @@
 --- movie_viewer
 ---
 
-DROP DATABASE IF EXISTS movies;
-CREATE DATABASE movies;
+DROP DATABASE IF EXISTS movie_viewer;
+CREATE DATABASE movie_viewer;
 \c movies
 
 DROP TABLE IF EXISTS trailers;
@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS movies_directors;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS movies_ratings;
+DROP TABLE IF EXISTS MPA_ratings;
 
 --
 -- Name: trailers; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
@@ -31,22 +32,11 @@ CREATE TABLE trailers (
 );
 
 --
--- Name: movies_trailers; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
---
-CREATE TABLE movies_trailers (
-    trailer_id INT NOT NULL,
-    movie_id INT NOT NULL,
-    PRIMARY KEY(trailer_id, movie_id),
-    CONSTRAINT fk_trailer FOREIGN KEY (trailer_id) REFERENCES trailers(trailer_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
-);
-
---
 -- Name: formats; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
 CREATE TABLE formats (
     format_id SERIAL PRIMARY KEY,
-    extension TEXT NOT NULL,
+    extension TEXT NOT NULL
 );
 
 --
@@ -72,17 +62,6 @@ CREATE TABLE actors (
 );
 
 --
--- Name: movies_actors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
---
-CREATE TABLE movies_actors (
-    actor_id INT NOT NULL,
-    movie_id INT NOT NULL,
-    PRIMARY KEY(actor_id, movie_id),
-    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES actors(actor_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
-);
-
---
 -- Name: genres; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
 CREATE TABLE genres (
@@ -94,12 +73,48 @@ CREATE TABLE genres (
 --
 -- Name: awards; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
-
+CREATE TABLE awards (
+    award_id SERIAL PRIMARY KEY,
+    award TEXT NOT NULL
+);
 
 --
 -- Name: directors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
+CREATE TABLE directors (
+    director_id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    gender TEXT,
+    birth_date DATE
+);
 
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    email character varying(320) UNIQUE NOT NULL,
+    cell_phone character varying(24) UNIQUE,
+    first_name TEXT,
+    last_name TEXT,
+    gender TEXT,
+    birth_date DATE,
+    profile_pic TEXT,
+    age INT NOT NULL
+);
+
+--
+-- Name: MPA_ratings; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE MPA_ratings (
+    rating_id SERIAL PRIMARY KEY,
+    rating TEXT NOT NULL,
+    description_short TEXT NOT NULL,
+    description_detailed TEXT NOT NULL
+);
 
 --
 -- Name: movies; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
@@ -112,28 +127,96 @@ CREATE TABLE movies (
     length_min TEXT NOT NULL,
     studio TEXT,
     format_id INT NOT NULL,
-    CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id)
+    resolution_id INT NOT NULL,
+    rating_id INT NOT NULL,
+    CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id),
+    CONSTRAINT fk_movie_resolution FOREIGN KEY (resolution_id) REFERENCES resolutions(resolution_id),
+    CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES MPA_ratings (rating_id)
 );
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+-- Name: movies_trailers; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
+CREATE TABLE movies_trailers (
+    trailer_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(trailer_id, movie_id),
+    CONSTRAINT fk_trailer FOREIGN KEY (trailer_id) REFERENCES trailers(trailer_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+--
+-- Name: movies_actors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movies_actors (
+    actor_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(actor_id, movie_id),
+    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES actors(actor_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+--
+-- Name: movie-genres; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movies_genres (
+    genre_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(genre_id, movie_id),
+    CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+--
+-- Name: movie-awards; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movies_awards (
+    award_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(award_id, movie_id),
+    CONSTRAINT fk_award FOREIGN KEY (award_id) REFERENCES awards(award_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+--
+-- Name: movie_directors; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movies_directors (
+    director_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    PRIMARY KEY(director_id, movie_id),
+    CONSTRAINT fk_director FOREIGN KEY (director_id) REFERENCES directors(director_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+--
+-- Name: movie_ratings; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+--
+CREATE TABLE movie_ratings (
+    user_id INT NOT NULL,
+    movie_id INT NOT NULL,
+    rating NUMERIC NOT NULL,
+    rating_date TIMESTAMP,
+    PRIMARY KEY(user_id, movie_id),
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
 
 -- Insert records
 INSERT INTO formats (extension) VALUES
 ('MP4'), ('MOV'), ('WMV'), ('AVI'), ('FLV'), ('F4V'), ('SWF'), ('MKV'), ('WEBM'), ('HTML5'), ('MPEG-2');
 
 INSERT INTO resolutions VALUES
-('SD (Standard Definition)', '640 x 480', '4:3', '480p'),
-('HD (High Definition)', '1280 x 720', '16:9', '720p'),
-('Full HD (FHD)', '1920 x 1080', '16:9', '1080p'),
-('QHD (Quad HD)', '2560 x 1440', '16:9', '1440p'),
-('2K', '2048 x 1080', '1:1.77', '1080p'),
-('4K (Ultra HD)', '3840 x 2160', '1:1.9', '2160p'),
-('8K (Full Ultra HD)', '7680 x 4320', '16:9', '4320p')
+(1, 'SD (Standard Definition)', '640 x 480', '4:3', '480p'),
+(2, 'HD (High Definition)', '1280 x 720', '16:9', '720p'),
+(3, 'Full HD (FHD)', '1920 x 1080', '16:9', '1080p'),
+(4, 'QHD (Quad HD)', '2560 x 1440', '16:9', '1440p'),
+(5, '2K', '2048 x 1080', '1:1.77', '1080p'),
+(6, '4K (Ultra HD)', '3840 x 2160', '1:1.9', '2160p'),
+(7, '8K (Full Ultra HD)', '7680 x 4320', '16:9', '4320p');
 
 -- Used site https://www.nyfa.edu/student-resources/ultimate-list-of-film-sub-genres/
-INSERT INTO genres VALUES
+INSERT INTO genres (genre, subgenre) VALUES
 ('Action', NULL),
     ('Action', 'Epic Movies'),  -- Ben Hur / Gone with the Wind
     ('Action', 'Spy Movies'),  -- Mission Impossible
@@ -214,4 +297,13 @@ INSERT INTO genres VALUES
     ('Western', 'Marshall Western'),  -- The Lone Ranger
     ('Western', 'Revisionist Western'),  -- Dances with Wolves
     ('Western', 'Revenge Western'),  -- High Plains Drifter
-    ('Western', 'Empire Western')  -- There will be blood
+    ('Western', 'Empire Western');  -- There will be blood
+
+INSERT INTO MPA_ratings VALUES
+(1, 'G', 'General Audiences', 'All ages admitted. Nothing that would offend parents for viewing by children.'),
+(2, 'PG', 'Parental Guidance Suggested', 'Some material may not be suitable for children. Parents urged to give "parental guidance". May contain some material parents might not like for their young children.'),
+(3, 'PG-13', 'Parents Strongly Cautioned', 'Some material may be inappropriate for children under 13. Parents are urged to be cautious. Some material may be inappropriate for pre-teenagers.'),
+(4, 'R', 'Restricted', 'Under 17 requires accompanying parent or adult guardian. Contains some adult material. Parents are urged to learn more about the film before taking their young children with them.'),
+(5, 'NC-17', 'Adults Only', 'No One 17 and Under Admitted. Clearly adult. Children are not admitted.'),
+(6, 'X', 'Adult Content', 'Contains an accumulation of brutal or sexually connotative language or explicit sex, or excessive and sadistic violence');
+
