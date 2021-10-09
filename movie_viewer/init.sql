@@ -28,7 +28,8 @@ DROP TABLE IF EXISTS MPA_ratings;
 --
 CREATE TABLE trailers (
     trailer_id SERIAL PRIMARY KEY,
-    trailer_url TEXT NOT NULL
+    trailer_url TEXT NOT NULL,
+    trailer_name TEXT NOT NULL
 );
 
 --
@@ -128,7 +129,10 @@ CREATE TABLE movies (
     studio TEXT,
     format_id INT NOT NULL,
     resolution_id INT NOT NULL,
-    rating_id INT NOT NULL,
+    rating_id INT,
+    cover TEXT,
+    movie TEXT NOT NULL,
+    movie_subtitles TEXT,
     CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id),
     CONSTRAINT fk_movie_resolution FOREIGN KEY (resolution_id) REFERENCES resolutions(resolution_id),
     CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES MPA_ratings (rating_id)
@@ -307,3 +311,58 @@ INSERT INTO MPA_ratings VALUES
 (5, 'NC-17', 'Adults Only', 'No One 17 and Under Admitted. Clearly adult. Children are not admitted.'),
 (6, 'X', 'Adult Content', 'Contains an accumulation of brutal or sexually connotative language or explicit sex, or excessive and sadistic violence');
 
+INSERT INTO trailers VALUES
+(1, 'https://youtu.be/v-PjgYDrg70', 'Toy Story'),
+(2, 'https://youtu.be/mE35XQFxbeo', 'A Bugs Life'),
+(3, 'https://youtu.be/xNWSGRD5CzU', 'Toy Story 2'),
+(4, 'https://youtu.be/CGbgaHoapFM', 'Monsters, Inc.'),
+(5, 'https://youtu.be/9oQ628Seb9w', 'Finding Nemo'),
+(6, 'https://youtu.be/-UaGUdNJdRQ', 'The Incredibles'),
+(7, 'https://youtu.be/W_H7_tDHFE8', 'Cars'),
+(8, 'https://youtu.be/NgsQ8mVkN8w', 'Ratatouille'),
+(9, 'https://youtu.be/CZ1CATNbXg0', 'WALL-E'),
+(10, 'https://youtu.be/AkdXuDAP2Ts', 'Up');
+
+INSERT INTO actors (first_name, last_name) VALUES
+('Tom', 'Hanks'),
+('Tim', 'Allen'),
+('Don', 'Rickles'),
+('Jim', 'Varney'),
+('Wallace', 'Shawn'),
+('John', 'Ratzenberger'),
+('Annie', 'Potts'),
+('John', 'Morris'),
+('Eric', 'von Detten');
+
+INSERT INTO awards (award) VALUES
+('Best Original Screenplay'),
+('Best Original Song'),
+('Best Original Score');
+
+INSERT INTO directors (first_name, last_name) VALUES
+('John', 'Lasseter');
+
+INSERT INTO users (username, password, email, age) VALUES
+('user1', 'passwordHappy', 'ed@gmail.com', 34),
+('user2', 'superPassword', 'bob@gmail.com', 38);
+
+INSERT INTO movies VALUES
+(1, 'Toy Story', 1995, 1, 21, 'Pixar', 1, 3, 1);
+
+INSERT INTO movies_trailers VALUES
+(1, 1);
+
+INSERT INTO movies_actors VALUES
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1);
+
+INSERT INTO movies_genres VALUES
+(16, 1), (21, 1), (32, 1);
+
+INSERT INTO movies_awards VALUES
+(1, 1), (2, 1), (3, 1);
+
+INSERT INTO movies_directors VALUES
+(1, 1);
+
+INSERT INTO movie_ratings VALUES
+(2, 1, 7), (3, 1, 8);
