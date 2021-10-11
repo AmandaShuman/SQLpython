@@ -42,16 +42,17 @@ def liked_tweets(id: int):
 def create():
     if 'username' not in request.json or 'password' not in request.json:
         return abort(400)
-    u = User(
-        username=request.json['username'],
-        # scramble the password after pulling from json
-        password=scramble(request.json['password'])
-    )
     if len(request.json['username']) < 3:
         return abort(400)
     if len(request.json['password']) < 8:
         return abort(400)
 
+    u = User(
+        username=request.json['username'],
+        # scramble the password after pulling from json
+        password=scramble(request.json['password'])
+    )
+    
     db.session.add(u)
     db.session.commit()
     return jsonify(u.serialize())
