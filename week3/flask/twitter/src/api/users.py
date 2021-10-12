@@ -29,6 +29,8 @@ def show(id: int):
     return jsonify(u.serialize())
 
 # returns all the tweets a user likes
+
+
 @bp.route('/<int:id>/liked_tweets', methods=['GET'])
 def liked_tweets(id: int):
     u = User.query.get_or_404(id)
@@ -52,21 +54,24 @@ def create():
         # scramble the password after pulling from json
         password=scramble(request.json['password'])
     )
-    
+
     db.session.add(u)
     db.session.commit()
     return jsonify(u.serialize())
 
 # Bonus task 1
+
+
 @bp.route('/<int:id>/likes', methods=['POST'])
 def like(id: int):
     if 'tweet_id' not in request.json:
         return abort(400)
     u = User.query.get_or_404(id)
     t = Tweet.query.get_or_404(request.json['tweet_id'])
-    stmt = sqlalchemy.insert(likes_table).values(
-        tweet_id=t.id, user_id=u.id)
+
     try:
+        stmt = sqlalchemy.insert(likes_table).values(
+            tweet_id=t.id, user_id=u.id)
         # compiling & executing the sql stmt based off the ORM notation
         db.session.execute(stmt)
         # adding the values to the table
@@ -80,13 +85,14 @@ def like(id: int):
 def unlike(user_id: int, tweet_id: int):
     User.query.get_or_404(user_id)
     Tweet.query.get_or_404(tweet_id)
-    stmt = sqlalchemy.delete(likes_table).where(
-        sqlalchemy.and_(
-            likes_table.c.user_id == user_id,
-            likes_table.c.tweet_id == tweet_id
-            )
-    )
+
     try:
+        stmt = sqlalchemy.delete(likes_table).where(
+            sqlalchemy.and_(
+                likes_table.c.user_id == user_id,
+                likes_table.c.tweet_id == tweet_id
+            )
+        )
         db.session.execute(stmt)
         db.session.commit()
         return jsonify(True)
@@ -110,13 +116,11 @@ def update(id: int):
     u = User.query.get_or_404(id)
     # how to create error if user doesn't change anything?
     if 'username' in request.json:
-        u.username=request.json['username']
+        u.username = request.json['username']
     if 'password' in request.json:
-        u.password=scramble(request.json['password'])
+        u.password = scramble(request.json['password'])
     try:
         db.session.commit()
         return jsonify(True)
     except:
         return jsonify(False)
-
-
