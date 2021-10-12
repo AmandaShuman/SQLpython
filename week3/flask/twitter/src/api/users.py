@@ -14,19 +14,34 @@ def scramble(password: str):
 bp = Blueprint('users', __name__, url_prefix='/users')
 
 
+@bp.app_errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": "Bad Request"
+    }), 400
+
+
 @bp.route('', methods=['GET'])
 def index():
     users = User.query.all()
     result = []
-    for u in users:
-        result.append(u.serialize())
-    return jsonify(result)
+    try:
+        for u in users:
+            result.append(u.serialize())
+        return jsonify(result)
+    except:
+        return abort(400)
 
 
 @bp.route('/<int:id>', methods=['GET'])
 def show(id: int):
     u = User.query.get_or_404(id)
-    return jsonify(u.serialize())
+    try:
+        return jsonify(u.serialize())
+    except:
+        return abort(400)
 
 # returns all the tweets a user likes
 
@@ -34,10 +49,13 @@ def show(id: int):
 @bp.route('/<int:id>/liked_tweets', methods=['GET'])
 def liked_tweets(id: int):
     u = User.query.get_or_404(id)
-    result = []
-    for t in u.liked_tweets:
-        result.append(t.serialize())
-    return jsonify(result)
+    try:
+        result = []
+        for t in u.liked_tweets:
+            result.append(t.serialize())
+        return jsonify(result)
+    except:
+        return abort(400)
 
 
 @bp.route('', methods=['POST'])
@@ -48,16 +66,18 @@ def create():
         return abort(400)
     if len(request.json['password']) < 8:
         return abort(400)
+    try:
+        u = User(
+            username=request.json['username'],
+            # scramble the password after pulling from json
+            password=scramble(request.json['password'])
+        )
 
-    u = User(
-        username=request.json['username'],
-        # scramble the password after pulling from json
-        password=scramble(request.json['password'])
-    )
-
-    db.session.add(u)
-    db.session.commit()
-    return jsonify(u.serialize())
+        db.session.add(u)
+        db.session.commit()
+        return jsonify(u.serialize())
+    except:
+        return abort(400)
 
 # Bonus task 1
 
