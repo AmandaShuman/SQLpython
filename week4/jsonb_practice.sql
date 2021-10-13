@@ -10,6 +10,7 @@ SELECT
 info -> 'display_name' AS name,
 info -> 'nationality' AS naionality
 FROM moma_artists 
+ORDER BY id
 LIMIT 50;
 
 -- getting American artists only in jsonb
@@ -18,6 +19,7 @@ info -> 'display_name' AS name,
 info -> 'nationality' AS naionality
 FROM moma_artists 
 WHERE info ->> 'nationality' = 'American'
+ORDER BY id
 LIMIT 50;
 
 -- how to insert JSON values 3 different ways 
