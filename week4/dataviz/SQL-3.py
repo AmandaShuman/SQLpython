@@ -85,6 +85,7 @@ query = '''
 
 df = sql_to_df(query)
 df.set_index('Rating', inplace=True)
+# use pandas to modify data into nc-17 & total
 num_adult_pastry = df.loc['NC-17', 'Count']
 total = df['Count'].sum()
 labels = ['all other', 'adult pastry']
@@ -103,3 +104,4 @@ ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.show()
 
 # %%
+

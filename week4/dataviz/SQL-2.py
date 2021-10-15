@@ -129,6 +129,7 @@ query = '''
 categories_by_gross = sql_to_df(query)
 categories_by_gross
 
+#divides figure into subplots of 1 row, 2 columns
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
 
 ypos = np.arange(len(categories_by_gross["revenue"]))
