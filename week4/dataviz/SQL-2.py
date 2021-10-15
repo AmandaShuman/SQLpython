@@ -106,3 +106,55 @@ plt.show()
 
 # %%
 # challenge - show bar and pie chart side by side
+query = '''
+    SELECT
+        cat.name category_name,
+        sum( IFNULL(pay.amount, 0) ) revenue
+    FROM category cat
+    LEFT JOIN film_category flm_cat
+    ON cat.category_id = flm_cat.category_id
+    LEFT JOIN film fil
+    ON flm_cat.film_id = fil.film_id
+    LEFT JOIN inventory inv
+    ON fil.film_id = inv.film_id
+    LEFT JOIN rental ren
+    ON inv.inventory_id = ren.inventory_id
+    LEFT JOIN payment pay
+    ON ren.rental_id = pay.rental_id
+    GROUP BY cat.name
+    ORDER BY revenue DESC
+    limit 5;
+'''
+
+categories_by_gross = sql_to_df(query)
+categories_by_gross
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+
+ypos = np.arange(len(categories_by_gross["revenue"]))
+bars = ax1.bar(ypos, categories_by_gross["revenue"].round(3), width=0.50)
+ax1.set_xticks(ypos)
+ax1.set_xticklabels(categories_by_gross["category_name"])
+# set_ylim sets the range min to max to make change more apparent
+ax1.set_ylim(ymin=4000, ymax=6000)
+ax1.set_title("gross by category", fontsize=14)
+ax1.set_ylabel("gross sales", fontsize=12)
+
+for bar in bars:  # add data labels
+    height = bar.get_height()
+    ax1.annotate(f"{height}",
+                xy=(bar.get_x() + bar.get_width() / 2, height),
+                xytext=(0, 3),  # 3 points vertical offset
+                textcoords="offset points",
+                ha="center", va="bottom",
+                fontweight="semibold")
+                
+explode = np.zeros(len(categories_by_gross["category_name"]))
+explode[0] = 0.1  # how far 1st piece sticks out
+ax2.pie(categories_by_gross["revenue"].round(3), explode=explode, labels=categories_by_gross["category_name"], autopct='%1.1f%%',
+       shadow=True, startangle=90)
+ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+plt.show()
+
+# %%
