@@ -313,7 +313,7 @@ INSERT INTO MPA_ratings VALUES
 
 INSERT INTO trailers VALUES
 (1, 'https://youtu.be/v-PjgYDrg70', 'Toy Story'),
-(2, 'https://youtu.be/mE35XQFxbeo', 'A Bugs Life'),
+(2, 'https://youtu.be/mE35XQFxbeo', 'A Bug''s Life'),
 (3, 'https://youtu.be/xNWSGRD5CzU', 'Toy Story 2'),
 (4, 'https://youtu.be/CGbgaHoapFM', 'Monsters, Inc.'),
 (5, 'https://youtu.be/9oQ628Seb9w', 'Finding Nemo'),
@@ -321,7 +321,21 @@ INSERT INTO trailers VALUES
 (7, 'https://youtu.be/W_H7_tDHFE8', 'Cars'),
 (8, 'https://youtu.be/NgsQ8mVkN8w', 'Ratatouille'),
 (9, 'https://youtu.be/CZ1CATNbXg0', 'WALL-E'),
-(10, 'https://youtu.be/AkdXuDAP2Ts', 'Up');
+(10, 'https://youtu.be/AkdXuDAP2Ts', 'Up'),
+(11, 'https://youtu.be/ZZv1vki4ou4', 'Toy Story 3'),
+(12, 'https://youtu.be/lg5hj2c5Nkk', 'Cars 2'),
+(13, 'https://youtu.be/TEHWDA_6e3M', 'Brave'),
+(14, 'https://youtu.be/QxrQ6BaijAY', 'Monsters University'),
+(15, 'https://youtu.be/WIDYqBMFzfg', 'Inside Out'),
+(16, 'https://youtu.be/7BrH72aFXfI', 'The Good Dinosaur'),
+(17, 'https://youtu.be/oP0WR2Ql9yI', 'Finding Dory'),
+(18, 'https://youtu.be/xGGM5Sy5PJs', 'Cars 3'),
+(19, 'https://youtu.be/Dh2szjud4I4', 'Coco'),
+(20, 'https://youtu.be/D9joM600LKA', 'Incredibles 2'),
+(21, 'https://youtu.be/lZHUmQ-dCXM', 'Toy Story 4'),
+(22, 'https://youtu.be/Alv1znZA6Es', 'Onward'),
+(23, 'https://youtu.be/aP5C1OSSEOo', 'Soul'),
+(24, 'https://youtu.be/fDGe7ozamj0', 'Luca');
 
 INSERT INTO actors (first_name, last_name) VALUES
 ('Tom', 'Hanks'),
@@ -339,8 +353,30 @@ INSERT INTO awards (award) VALUES
 ('Best Original Song'),
 ('Best Original Score');
 
-INSERT INTO directors (first_name, last_name) VALUES
-('John', 'Lasseter');
+INSERT INTO directors VALUES
+(1, 'John', 'Lasseter'),
+(2, 'Pete', 'Docter'),
+(3, 'Andrew', 'Stanton'),
+(4, 'Brad', 'Bird'),
+(5, 'Lee', 'Unkrich'),
+(6, 'Mark', 'Andrews'),
+(7, 'Brenda', 'Chapman'),
+(8, 'Dan', 'Scanlon'),
+(9, 'Peter', 'Sohn'),
+(10, 'Brian', 'Fee'),
+(11, 'Josh', 'Cooley'),
+(12, 'Enrico', 'Casarosa'),
+(13, 'Ash', 'Brannon'),
+(14, 'David', 'Silverman'),
+(15, 'Joe', 'Ranft'),
+(16, 'Bob', 'Peterson'),
+(17, 'Brad', 'Lewis'),
+(18, 'Steve', 'Purcell'),
+(19, 'Ronnie', 'del Carmen'),
+(20, 'Angus', 'MacLane'),
+(21'Kemp', 'Powers'),
+(22, 'Jan', 'Pinkava'),
+(23, 'Adrian', 'Molina');
 
 INSERT INTO users (username, password, email, age) VALUES
 ('user1', 'passwordHappy', 'ed@gmail.com', 34),
@@ -350,7 +386,7 @@ INSERT INTO movies VALUES
 (1, 'Toy Story', 1995, 1, 21, 'Pixar', 1, 3, 1);
 
 INSERT INTO movies_trailers VALUES
-(1, 1);
+(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20), (21, 21), (22, 22), (23, 23), (24, 24);
 
 INSERT INTO movies_actors VALUES
 (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1);
@@ -362,7 +398,7 @@ INSERT INTO movies_awards VALUES
 (1, 1), (2, 1), (3, 1);
 
 INSERT INTO movies_directors VALUES
-(1, 1);
+(1, 1), (2, 1), (2, 3), (3, 1), (3, 13), (4, 2), (4, 5), (4, 14), (5, 3), (5, 5), (6, 4), (7, 1), (7, 15), (8, 4), (8, 22), (9, 3), (10, 2), (10, 16), (11, 5), (12, 1), (12, 17), (13, 6), (13, 7), (13, 18), (14, 8), (15, 2), (15, 19), (16, 9), (17, 3), (17, 20), (18, 10), (19, 5), (19, 23), (20, 4), (21, 11), (22, 8), (23, 2), (23, 21), (24, 12);
 
 INSERT INTO movie_ratings VALUES
 (2, 1, 7), (3, 1, 8);
