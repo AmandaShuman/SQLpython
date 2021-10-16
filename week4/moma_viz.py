@@ -23,7 +23,7 @@ def task1():
     query = '''
         SELECT 
             department,
-            COUNT(department) AS count
+            COUNT(*) AS count
         FROM moma_works
         GROUP BY department
         ORDER BY count DESC;
@@ -61,10 +61,10 @@ def task2():
     query = '''
         SELECT
             classification,
-            COUNT(classification) AS count
+            COUNT(*) AS count
         FROM moma_works
         GROUP BY classification
-        HAVING COUNT(*) > 99
+        HAVING COUNT(*) >= 100
         ORDER BY count
         DESC;
     '''
@@ -96,9 +96,9 @@ def task3():
     query = '''
         SELECT
             info ->> 'nationality' AS nationality,
-            COUNT(info -> 'nationality') AS count
+            COUNT(*) AS count
         FROM moma_artists
-        WHERE info -> 'nationality' IS NOT NULL
+        WHERE info ->> 'nationality' IS NOT NULL
         GROUP BY nationality
         ORDER BY count DESC
         LIMIT 10;
@@ -133,7 +133,7 @@ def task4():
         FROM moma_artists
         WHERE info ->> 'gender' IS NOT NULL
         GROUP BY gender
-        ORDER BY count;
+        ORDER BY gender;
     '''
 
     dataframe = sql_to_df(query)
@@ -161,7 +161,7 @@ task4()
 def task5():
     """Perform Task 5."""
 
-    title = "Paintings acquired by date"  # TODO task 5
+    title = "Cumulative Painting Acquisition by Date"  # TODO task 5
     query = """
             WITH daily_acquisition_count AS (
                 SELECT date_acquired, COUNT(*) FROM moma_works 

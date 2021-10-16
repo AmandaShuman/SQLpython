@@ -8,7 +8,7 @@ FROM moma_artists LIMIT 50;
 -- parse-display only the display_name and nationality
 SELECT 
 info -> 'display_name' AS name,
-info -> 'nationality' AS naionality
+info -> 'nationality' AS nationality
 FROM moma_artists 
 ORDER BY id
 LIMIT 50;
@@ -16,7 +16,7 @@ LIMIT 50;
 -- getting American artists only in jsonb
 SELECT 
 info -> 'display_name' AS name,
-info -> 'nationality' AS naionality
+info -> 'nationality' AS nationality
 FROM moma_artists 
 WHERE info ->> 'nationality' = 'American'
 ORDER BY id
