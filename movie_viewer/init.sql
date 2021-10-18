@@ -301,7 +301,11 @@ INSERT INTO genres (genre, subgenre) VALUES
     ('Western', 'Marshall Western'),  -- The Lone Ranger
     ('Western', 'Revisionist Western'),  -- Dances with Wolves
     ('Western', 'Revenge Western'),  -- High Plains Drifter
-    ('Western', 'Empire Western');  -- There will be blood
+    ('Western', 'Empire Western'),  -- There will be blood
+('Adventure', NULL),
+    ('Adventure', 'Swashbuckler films'),
+    ('Adventure', 'Pirate films'),
+    ('Adventure', 'Survival films');
 
 INSERT INTO MPA_ratings VALUES
 (1, 'G', 'General Audiences', 'All ages admitted. Nothing that would offend parents for viewing by children.'),
@@ -349,7 +353,17 @@ INSERT INTO actors VALUES
 (9, 'Eric', 'von Detten'),
 (10, 'Dave', 'Foley'),
 (11, 'Kevin', 'Spacey'),
-(12, 'Julia', 'Louis-Dreyfus')
+(12, 'Julia', 'Louis-Dreyfus'),
+(13, 'Joan', 'Cusack'),
+(14, 'Kelsey', 'Grammer'),
+(15, 'Billy', 'Crystal'),
+(16, 'John', 'Goodman'),
+(17, 'Mary', 'Gibbs'),
+(18, 'Steve', 'Buscemi'),
+(19, 'Albert', 'Brooks'),
+(20, 'Ellen', 'DeGeneres'),
+(21, 'Alexander', 'Gould'),
+(22, 'William', 'DaFoe')
 ;
 
 INSERT INTO awards (award) VALUES
@@ -420,10 +434,35 @@ INSERT INTO movies_trailers VALUES
 (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20), (21, 21), (22, 22), (23, 23), (24, 24);
 
 INSERT INTO movies_actors VALUES
-(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 2), (11, 2), (12, 2);
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 2), (11, 2), (12, 2),
+(1, 3), (2, 3), (13, 3), (14, 3), (15, 4), (16, 4), (17, 4), (18, 4), (19, 5), (20, 5) (21, 5), (22, 5);
 
 INSERT INTO movies_genres VALUES
-(16, 1), (21, 1), (32, 1);
+(16, 1), (21, 1), (32, 1), (82, 1), 
+(16, 2), (21, 2), (32, 2), (85, 2), 
+(16, 3), (21, 3), (32, 3), (82, 3),
+(16, 4), (21, 4), (32, 4), (82, 4), 
+(16, 5), (21, 5), (32, 5), (85, 5), 
+(16, 6), (21, 6), (37, 6), (82, 6), (5, 6),
+(16, 7), (21, 7), (32, 7), (82, 7), 
+(16, 8), (21, 8), (32, 8), (82, 8), 
+(16, 9), (21, 9), (32, 9), (82, 9), (63, 9),
+(16, 10), (21, 10), (32, 10), (82, 10), 
+(16, 11), (21, 11), (32, 11), (82, 11), 
+(16, 12), (21, 12), (32, 12), (82, 12), 
+(16, 13), (21, 13), (32, 13), (82, 13), 
+(16, 14), (21, 14), (32, 14), (82, 14), 
+(16, 15), (21, 15), (32, 15), (82, 15),
+(16, 16), (21, 16), (32, 16), (85, 16), 
+(16, 17), (21, 17), (32, 17), (82, 17),
+(16, 18), (21, 18), (32, 18), (82, 18),
+(16, 19), (21, 19), (32, 19), (82, 19),
+(16, 20), (21, 20), (37, 20), (82, 20), (5, 20),
+(16, 21), (21, 21), (32, 21), (82, 21),
+(16, 22), (21, 22), (32, 22), (82, 22),
+(16, 23), (21, 23), (32, 23), (85, 23),
+(16, 24), (21, 24), (32, 24), (82, 24),
+;
 
 INSERT INTO movies_awards VALUES
 (1, 1), (2, 1), (3, 1), (4, 2), (5, 2);
