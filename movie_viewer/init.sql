@@ -4,7 +4,7 @@
 
 DROP DATABASE IF EXISTS movie_viewer;
 CREATE DATABASE movie_viewer;
-\c movies
+--\c movies
 
 DROP TABLE IF EXISTS trailers;
 DROP TABLE IF EXISTS movies_trailers;
@@ -59,7 +59,8 @@ CREATE TABLE actors (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     gender TEXT,
-    birth_date DATE
+    birth_date DATE,
+    picture TEXT
 );
 
 --
@@ -68,7 +69,8 @@ CREATE TABLE actors (
 CREATE TABLE genres (
     genre_id SERIAL PRIMARY KEY,
     genre TEXT NOT NULL,
-    subgenre TEXT
+    subgenre TEXT,
+    description TEXT
 );
 
 --
@@ -87,7 +89,8 @@ CREATE TABLE directors (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     gender TEXT,
-    birth_date DATE
+    birth_date DATE,
+    picture TEXT
 );
 
 --
@@ -207,8 +210,8 @@ CREATE TABLE movie_ratings (
 );
 
 -- Insert records
-INSERT INTO formats (extension) VALUES
-('MP4'), ('MOV'), ('WMV'), ('AVI'), ('FLV'), ('F4V'), ('SWF'), ('MKV'), ('WEBM'), ('HTML5'), ('MPEG-2');
+INSERT INTO formats VALUES
+(1, 'MP4'), (2, 'MOV'), (3, 'WMV'), (4, 'AVI'), (5, 'FLV'), (6, 'F4V'), (7, 'SWF'), (8, 'MKV'), (9, 'WEBM'), (10, 'HTML5'), (11, 'MPEG-2');
 
 INSERT INTO resolutions VALUES
 (1, 'SD (Standard Definition)', '640 x 480', '4:3', '480p'),
@@ -220,92 +223,92 @@ INSERT INTO resolutions VALUES
 (7, '8K (Full Ultra HD)', '7680 x 4320', '16:9', '4320p');
 
 -- Used site https://www.nyfa.edu/student-resources/ultimate-list-of-film-sub-genres/
-INSERT INTO genres (genre, subgenre) VALUES
-('Action', NULL),
-    ('Action', 'Epic Movies'),  -- Ben Hur / Gone with the Wind
-    ('Action', 'Spy Movies'),  -- Mission Impossible
-    ('Action', 'Disaster Movies'),  -- Day after Tomorrow
-    ('Action', 'Superhero Movies'),  -- Hancock
-    ('Action', 'Thriller Movies'),  -- Die Hard
-    ('Action', 'Martial Arts Movies'),  -- The Karate Kid
-    ('Action', 'Video Game Movies'),  -- Resident Evil
-('Animation', NULL),
-    ('Animation', 'Traditional'),  --Pinocchio/ Spirited Away
-    ('Animation', 'Rotoscoping'), -- A Scanner Darkly
-    ('Animation', 'Puppet'),  -- Coraline, Nightmare Before Christmas
-    ('Animation', 'Claymation'),  -- Wallace and Grommit
-    ('Animation', 'Live/Animation'),  -- Space Jam, Osmosis Jones
-    ('Animation', '2D CGI'),  -- Home on the Range
-    ('Animation', '3D CGI'),  -- Frozen, Toy Story, Up
-('Crime', NULL),
-    ('Crime', 'Detective Movies'),  -- Lady on a Train
-    ('Crime', 'Gangster Movies'),  -- Gangs of New York
-    ('Crime', 'Legal Thrillers'),  -- A Few Good Men
-('Comedy', NULL),
-    ('Comedy', 'Anarchic'),  -- Monty Python
-    ('Comedy', 'Bathroom'),  -- American Pie
-    ('Comedy', 'Parody'),  -- Scary Movie
-    ('Comedy', 'Sex'),  -- Knocked Up
-    ('Comedy', 'Straight'),  -- Mrs. Doubtfire
-('Drama', NULL),
-    ('Drama', 'Docudrama'),  --  Zodiac
-    ('Drama', 'Comedy Drama'),  -- The Truman Show
-    ('Drama', 'Light Drama'),  -- The Help/ Terminal
-    ('Drama', 'Satire'),  -- Idiocracy
-('Fantasy', NULL),
-    ('Fantasy', 'Urban Fantasy'), -- Ghostbusters / Constantine
-    ('Fantasy', 'Dark Fantasy'),  -- Pan's Labyrinth
-    ('Fantasy', 'Fairy Tale'),  -- Maleficient
-    ('Fantasy', 'Epic Fantasy'),  --Lord of the Rings / Narnia
-    ('Fantasy', 'Heroic Fantasy'),  -- Dark Crystal
-    ('Fantasy', 'Sword/Sorcery'), -- Conan the Barbarian
-('Historical', NULL),
-    ('Historical', 'Biopic'),  -- Lincoln
-    ('Historical', 'Historical Drama'),  --Titanic / Braveheart
-    ('Historical', 'Biblical'),  --The Ten Commandments / Ben Hur
-    ('Historical', 'Period'),  -- Anna and the King
-    ('Historical', 'Alternate History'),  --Timequest
-('Horror', NULL),
-    ('Horror', 'Slasher'),  --Nightmare on Elm Street / Scream
-    ('Horror', 'Splatter'),  -- Saw
-    ('Horror', 'Pyschological Horror'),  --Silence of the Lambs
-    ('Horror', 'Survival'),  -- 28 Days Later
-    ('Horror', 'Found Footage'),  -- Blair Witch Project
-    ('Horror', 'Paranormal/Occult'),  --Paranormal Activity/ Exorcist
-    ('Horror', 'Monster'),  -- Cloverfield
-('Romance', NULL), 
-    ('Romance', 'Romantic comedy'),  --Love Actually
-    ('Romance', 'Historical Romance'),  -- Pride and Prejudice 
-    ('Romance', 'Romantic Action'),  -- A Knight's Tale
-    ('Romance', 'Romantic Thriller'),  --Mr and Mrs Smith
-    ('Romance', 'Chick flick'),  --The Notebook
-    ('Romance', 'Romantic Drama'),  --Casablanca
-('Sci-Fi', NULL),
-    ('Sci-Fi', 'Hard'),  -- Jurassic Park / Gravity
-    ('Sci-Fi', 'Apocalyptic'),  -- Planet of the Apes
-    ('Sci-Fi', 'Future Noir'),  -- Terminator/ Blade Runner
-    ('Sci-Fi', 'Space Opera'),  -- Star Wars
-    ('Sci-Fi', 'Military'),  -- Starship Troopers
-    ('Sci-Fi', 'Punk'),  -- Total Recall, Demolition Man
-    ('Sci-Fi', 'Speculative'),  -- Interstellar
-('Thriller', NULL),
-    ('Thriller', 'Action Thriller'),  -- Taken
-    ('Thriller', 'Comedy Thriller'),  -- Mr and Mrs Smith
-    ('Thriller', 'Conspiracy'),  -- The Da Vinci Code
-    ('Thriller', 'Crime Thriller'),  -- Entrapment
-    ('Thriller', 'Erotic'),  -- Basic Instinct
-    ('Thriller', 'Pandemic'),  -- Contagin, Outbreak
-('Western', NULL),
-    ('Western', 'Epic Western'),  -- The Good, The Bad, The Ugly
-    ('Western', 'Outlaw Western'),  -- Butch Cassidy and the Sundance Kid
-    ('Western', 'Marshall Western'),  -- The Lone Ranger
-    ('Western', 'Revisionist Western'),  -- Dances with Wolves
-    ('Western', 'Revenge Western'),  -- High Plains Drifter
-    ('Western', 'Empire Western'),  -- There will be blood
-('Adventure', NULL),
-    ('Adventure', 'Swashbuckler films'),
-    ('Adventure', 'Pirate films'),
-    ('Adventure', 'Survival films');
+INSERT INTO genres VALUES
+(1, 'Action', NULL),
+    (2, 'Action', 'Epic Movies'),  -- Ben Hur / Gone with the Wind
+    (3, 'Action', 'Spy Movies'),  -- Mission Impossible
+    (4, 'Action', 'Disaster Movies'),  -- Day after Tomorrow
+    (5, 'Action', 'Superhero Movies'),  -- Hancock
+    (6, 'Action', 'Thriller Movies'),  -- Die Hard
+    (7, 'Action', 'Martial Arts Movies'),  -- The Karate Kid
+    (8, 'Action', 'Video Game Movies'),  -- Resident Evil
+(9, 'Animation', NULL),
+    (10, 'Animation', 'Traditional'),  --Pinocchio/ Spirited Away
+    (11, 'Animation', 'Rotoscoping'), -- A Scanner Darkly
+    (12, 'Animation', 'Puppet'),  -- Coraline, Nightmare Before Christmas
+    (13, 'Animation', 'Claymation'),  -- Wallace and Grommit
+    (14, 'Animation', 'Live/Animation'),  -- Space Jam, Osmosis Jones
+    (15, 'Animation', '2D CGI'),  -- Home on the Range
+    (16, 'Animation', '3D CGI'),  -- Frozen, Toy Story, Up
+(17, 'Crime', NULL),
+    (18, 'Crime', 'Detective Movies'),  -- Lady on a Train
+    (19, 'Crime', 'Gangster Movies'),  -- Gangs of New York
+    (20, 'Crime', 'Legal Thrillers'),  -- A Few Good Men
+(21, 'Comedy', NULL),
+    (22, 'Comedy', 'Anarchic'),  -- Monty Python
+    (23, 'Comedy', 'Bathroom'),  -- American Pie
+    (24, 'Comedy', 'Parody'),  -- Scary Movie
+    (25, 'Comedy', 'Sex'),  -- Knocked Up
+    (26, 'Comedy', 'Straight'),  -- Mrs. Doubtfire
+(27, 'Drama', NULL),
+    (28, 'Drama', 'Docudrama'),  --  Zodiac
+    (29, 'Drama', 'Comedy Drama'),  -- The Truman Show
+    (30, 'Drama', 'Light Drama'),  -- The Help/ Terminal
+    (31, 'Drama', 'Satire'),  -- Idiocracy
+(32, 'Fantasy', NULL),
+    (33, 'Fantasy', 'Urban Fantasy'), -- Ghostbusters / Constantine
+    (34, 'Fantasy', 'Dark Fantasy'),  -- Pan's Labyrinth
+    (35, 'Fantasy', 'Fairy Tale'),  -- Maleficient
+    (36, 'Fantasy', 'Epic Fantasy'),  --Lord of the Rings / Narnia
+    (37, 'Fantasy', 'Heroic Fantasy'),  -- Dark Crystal
+    (38, 'Fantasy', 'Sword/Sorcery'), -- Conan the Barbarian
+(39, 'Historical', NULL),
+    (40, 'Historical', 'Biopic'),  -- Lincoln
+    (41, 'Historical', 'Historical Drama'),  --Titanic / Braveheart
+    (42, 'Historical', 'Biblical'),  --The Ten Commandments / Ben Hur
+    (43, 'Historical', 'Period'),  -- Anna and the King
+    (44, 'Historical', 'Alternate History'),  --Timequest
+(45, 'Horror', NULL),
+    (46, 'Horror', 'Slasher'),  --Nightmare on Elm Street / Scream
+    (47, 'Horror', 'Splatter'),  -- Saw
+    (48, 'Horror', 'Pyschological Horror'),  --Silence of the Lambs
+    (49, 'Horror', 'Survival'),  -- 28 Days Later
+    (50, 'Horror', 'Found Footage'),  -- Blair Witch Project
+    (51, 'Horror', 'Paranormal/Occult'),  --Paranormal Activity/ Exorcist
+    (52, 'Horror', 'Monster'),  -- Cloverfield
+(53, 'Romance', NULL), 
+    (54, 'Romance', 'Romantic comedy'),  --Love Actually
+    (55, 'Romance', 'Historical Romance'),  -- Pride and Prejudice 
+    (56, 'Romance', 'Romantic Action'),  -- A Knight's Tale
+    (57, 'Romance', 'Romantic Thriller'),  --Mr and Mrs Smith
+    (58, 'Romance', 'Chick flick'),  --The Notebook
+    (59, 'Romance', 'Romantic Drama'),  --Casablanca
+(60, 'Sci-Fi', NULL),
+    (61, 'Sci-Fi', 'Hard'),  -- Jurassic Park / Gravity
+    (62, 'Sci-Fi', 'Apocalyptic'),  -- Planet of the Apes
+    (63, 'Sci-Fi', 'Future Noir'),  -- Terminator/ Blade Runner
+    (64, 'Sci-Fi', 'Space Opera'),  -- Star Wars
+    (65, 'Sci-Fi', 'Military'),  -- Starship Troopers
+    (66, 'Sci-Fi', 'Punk'),  -- Total Recall, Demolition Man
+    (67, 'Sci-Fi', 'Speculative'),  -- Interstellar
+(68, 'Thriller', NULL),
+    (69, 'Thriller', 'Action Thriller'),  -- Taken
+    (70, 'Thriller', 'Comedy Thriller'),  -- Mr and Mrs Smith
+    (71, 'Thriller', 'Conspiracy'),  -- The Da Vinci Code
+    (72, 'Thriller', 'Crime Thriller'),  -- Entrapment
+    (73, 'Thriller', 'Erotic'),  -- Basic Instinct
+    (74, 'Thriller', 'Pandemic'),  -- Contagin, Outbreak
+(75, 'Western', NULL),
+    (76, 'Western', 'Epic Western'),  -- The Good, The Bad, The Ugly
+    (77, 'Western', 'Outlaw Western'),  -- Butch Cassidy and the Sundance Kid
+    (78, 'Western', 'Marshall Western'),  -- The Lone Ranger
+    (79, 'Western', 'Revisionist Western'),  -- Dances with Wolves
+    (80, 'Western', 'Revenge Western'),  -- High Plains Drifter
+    (81, 'Western', 'Empire Western'),  -- There will be blood
+(82, 'Adventure', NULL),
+    (83, 'Adventure', 'Swashbuckler films'),
+    (84, 'Adventure', 'Pirate films'),
+    (85, 'Adventure', 'Survival films');
 
 INSERT INTO MPA_ratings VALUES
 (1, 'G', 'General Audiences', 'All ages admitted. Nothing that would offend parents for viewing by children.'),
@@ -382,7 +385,7 @@ INSERT INTO actors VALUES
 (38, 'Fred', 'Willard'),
 (39, 'Ed', 'Asner'),
 (40, 'Jordan', 'Nagai'),
-(41, 'John' 'Ratzenberger'),
+(41, 'John', 'Ratzenberger'),
 (42, 'Christopher', 'Plummer'),
 (43, 'Ned', 'Beatty'),
 (44, 'Michael', 'Caine'),
@@ -426,12 +429,12 @@ INSERT INTO actors VALUES
 (82, 'Saverio', 'Raimondo')
 ;
 
-INSERT INTO awards (award) VALUES
-('Best Original Screenplay'),
-('Best Original Song'),
-('Best Original Score'),
-('Best Instrumental Composition'),
-('Best Animated Film');
+INSERT INTO awards VALUES
+(1, 'Best Original Screenplay'),
+(2, 'Best Original Song'),
+(3, 'Best Original Score'),
+(4, 'Best Instrumental Composition'),
+(5, 'Best Animated Film');
 
 INSERT INTO directors VALUES
 (1, 'John', 'Lasseter'),
@@ -454,13 +457,13 @@ INSERT INTO directors VALUES
 (18, 'Steve', 'Purcell'),
 (19, 'Ronnie', 'del Carmen'),
 (20, 'Angus', 'MacLane'),
-(21'Kemp', 'Powers'),
+(21, 'Kemp', 'Powers'),
 (22, 'Jan', 'Pinkava'),
 (23, 'Adrian', 'Molina');
 
-INSERT INTO users (username, password, email, age) VALUES
-('user1', 'passwordHappy', 'ed@gmail.com', 34),
-('user2', 'superPassword', 'bob@gmail.com', 38);
+INSERT INTO users (user_id, username, password, email, age) VALUES
+(1, 'user1', 'passwordHappy', 'ed@gmail.com', 34),
+(2, 'user2', 'superPassword', 'bob@gmail.com', 38);
 
 INSERT INTO movies VALUES
 -- id, title, year, length_min, studio, format_id(edit later), resolution_id (edit later), rating_id, cover, movie (edit later), subtitles (edit later), summary
@@ -482,7 +485,7 @@ INSERT INTO movies VALUES
 (16, 'The Good Dinosaur', 2015, 93, 'Disney Pixar', 1, 3, 2, 'https://m.media-amazon.com/images/M/MV5BMTc5MTg2NjQ4MV5BMl5BanBnXkFtZTgwNzcxOTY5NjE@._V1_UY209_CR0,0,140,209_AL_.jpg', 'movie link', 'sub link', 'In a world where dinosaurs and humans live side-by-side, an Apatosaurus named Arlo makes an unlikely human friend.'),
 (17, 'Finding Dory', 2016, 97, 'Disney Pixar', 1, 3, 2, 'https://m.media-amazon.com/images/M/MV5BNzg4MjM2NDQ4MV5BMl5BanBnXkFtZTgwMzk3MTgyODE@._V1_UY209_CR0,0,140,209_AL_.jpg', 'movie link', 'sub link', 'Friendly but forgetful blue tang Dory begins a search for her long-lost parents, and everyone learns a few things about the real meaning of family along the way.'),
 (18, 'Cars 3', 2017, 102, 'Disney Pixar', 1, 3, 1, 'https://upload.wikimedia.org/wikipedia/en/9/94/Cars_3_poster.jpg', 'movie link', 'sub link', 'Blindsided by a new generation of blazing-fast cars, the legendary Lighting McQueen finds himself pushed out of the sport that he loves. Hoping to get back in the game, he turns to Cruz Ramirez, an eager young technician who has her own plans for winning. With inspiration from the Fabulous Hudson Hornet and a few unexpected turns, No. 95 prepares to compete on Piston Cup Racing''s biggest stage.'),
-(19, 'Coco', 2017, 105, 'Disney Pixar', 1, 3, 2, 2, 'https://m.media-amazon.com/images/M/MV5BYjQ5NjM0Y2YtNjZkNC00ZDhkLWJjMWItN2QyNzFkMDE3ZjAxXkEyXkFqcGdeQXVyODIxMzk5NjA@._V1_UY209_CR3,0,140,209_AL_.jpg', 'movie link', 'sub link', 'Aspiring musician Miguel, confronted with his family''s ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.'),
+(19, 'Coco', 2017, 105, 'Disney Pixar', 1, 3, 2, 'https://m.media-amazon.com/images/M/MV5BYjQ5NjM0Y2YtNjZkNC00ZDhkLWJjMWItN2QyNzFkMDE3ZjAxXkEyXkFqcGdeQXVyODIxMzk5NjA@._V1_UY209_CR3,0,140,209_AL_.jpg', 'movie link', 'sub link', 'Aspiring musician Miguel, confronted with his family''s ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer.'),
 (20, 'Incredibles 2', 2018, 118, 'Disney Pixar', 1, 3, 2, 'https://upload.wikimedia.org/wikipedia/en/2/27/The_Incredibles_2.jpg', 'movie link', 'sub link', 'The Incredibles family takes on a new mission which involves a change in family roles: Bob Parr (Mr. Incredible) must manage the house while his wife Helen (Elastigirl) goes out to save the world.'),
 (21, 'Toy Story 4', 2019, 100, 'Disney Pixar', 1, 3, 1, 'https://upload.wikimedia.org/wikipedia/en/4/4c/Toy_Story_4_poster.jpg', 'movie link', 'sub link', 'When a new toy called "Forky" joins Woody and the gang, a road trip alongside old and new friends reveals how big the world can be for a toy.'),
 (22, 'Onward', 2020, 102, 'Disney Pixar', 1, 3, 2, 'https://upload.wikimedia.org/wikipedia/en/0/03/Onward_poster.jpg', 'movie link', 'sub link', 'Two elven brothers embark on a quest to bring their father back for one day.'),
@@ -500,8 +503,8 @@ INSERT INTO movies_actors VALUES
 (15, 4), (16, 4), (17, 4), (18, 4), 
 (19, 5), (20, 5), (21, 5), (22, 5),
 (23, 6), (24, 6), (25, 6), (26, 6),
-(27, 7), (28, 7), (29, 7), (30, 7)
-(31, 8), (32, 8), (33, 8), (34, 8)
+(27, 7), (28, 7), (29, 7), (30, 7),
+(31, 8), (32, 8), (33, 8), (34, 8),
 (35, 9), (36, 9), (37, 9), (38, 9),
 (39, 10), (40, 10), (41, 10), (42, 10),
 (1, 11), (2, 11), (13, 11), (43, 11),
@@ -574,7 +577,7 @@ INSERT INTO movies_directors VALUES
 (21, 11), 
 (22, 8), 
 (23, 2), (23, 21), 
-(24, 12);
+(23, 12);
 
 INSERT INTO movie_ratings VALUES
 (1, 1, 7), (2, 1, 8);
