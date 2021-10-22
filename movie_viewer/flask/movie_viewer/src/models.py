@@ -7,11 +7,59 @@ db = SQLAlchemy()
 # https://docs.sqlalchemy.org/en/14/core/metadata.html#sqlalchemy.schema.Column
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/#many-to-many-relationships
 
+
+class Trailer(db.Model):
+    __tablename__ = 'trailers'
+    trailer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    trailer_url = db.Column(dt.Text, nullable=False)
+    trailer_name = db.Column(db.String(100), nullable=False)
+
+
+class Format(db.Model):
+    __tablename__ = 'formats'
+    format_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    extension = db.Column(db.String(10), nullable=False)
+
+
+class Resolution(db.Model):
+    __tablename__ = 'resolutions'
+    resolution_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    resoution = db.Column(db.String(40), nullable=False)
+    pixel_size = db.Column(db.String(15), nullable=False)
+    aspect_ratio = db.Column(db.String(10), nullable=False)
+    num_p = db.Column(db.String(10))
+
+
 class Actor(db.Model):
-    __tablename__='actors'
+    __tablename__ = 'actors'
     actor_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.string(50), nullable=False)
-    last_name = db.Column(db.string(50), nullable=False)
-    gender = db.Column(db.string(10))
-    birth_date = db.Column(db.date)
-    picture = db.Column(db.string())
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(10))
+    birth_date = db.Column(db.Date)
+    picture = db.Column(db.Text)
+
+
+class Genre(db.Model):
+    __tablename__ = 'genres'
+    genre_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    genre = db.Column(db.String(25), nullable=False)
+    subgenre = db.Column(db.String(25))
+    description = db.Column(db.Text)
+
+class Award(db.Model):
+    __tablename__ = 'awards'
+    award_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    award = db.Column(db.String(150), nullable=False)
+
+
+class Director(db.Model):
+    __tablename__ = 'directors'
+    director_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(10))
+    birth_date = db.Column(db.Date)
+    picture = db.Column(db.Text)
+
+
