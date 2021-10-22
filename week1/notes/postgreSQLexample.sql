@@ -5,6 +5,7 @@
 --- CREATE tables
 ---
 
+
 CREATE TABLE events (
     event_id SERIAL,
     show_time TIMESTAMP,
