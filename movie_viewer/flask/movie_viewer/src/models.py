@@ -1,4 +1,4 @@
-from enum import unique
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -12,7 +12,7 @@ db = SQLAlchemy()
 class Trailer(db.Model):
     __tablename__ = 'trailers'
     trailer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    trailer_url = db.Column(dt.Text, nullable=False)
+    trailer_url = db.Column(db.Text, nullable=False)
     trailer_name = db.Column(db.String(100), nullable=False)
 
 
@@ -48,6 +48,7 @@ class Genre(db.Model):
     subgenre = db.Column(db.String(25))
     description = db.Column(db.Text)
 
+
 class Award(db.Model):
     __tablename__ = 'awards'
     award_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -67,7 +68,7 @@ class Director(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(15),unique=True, nullable=False)
+    username = db.Column(db.String(15), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     email = db.Column(db.String(320), unique=True, nullable=False)
     first_name = db.Column(db.String(50))
@@ -84,3 +85,128 @@ class Mpa_rating(db.Model):
     rating = db.Column(db.String(10), nullable=False)
     description_short = db.Column(db.String(100))
     description_detailed = db.Column(db.Text)
+
+
+class Movie(db.Model):
+    __tablename__ = 'movies'
+    movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(50), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    length_min = db.Column(db.Integer, nullable=False)
+    studio = db.Column(db.String(50))
+    format_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('formats.format_id'), 
+        nullable=False
+        )
+    resolution_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('resolutions.resolution_id'), 
+        nullable=False
+        )
+    rating_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('MPA_ratings.rating_id'), 
+        nullable=False
+        )
+    cover = db.Column(db.Text)
+    movie = db.Column(db.Text, nullable=False)
+    movie_subtitles = db.Column(db.Text)
+    summary = db.Column(db.Text)
+
+
+movie_trailers_table = db.Table(
+    'movies_trailers',
+    db.Column(
+        'trailer_id', db.Integer,
+        db.ForeignKey('trailers.trailer_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    )
+)
+
+
+movie_actors_table = db.Table(
+    'movies_actors',
+    db.Column(
+        'actor_id', db.Integer,
+        db.ForeignKey('actors.actor_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    )
+)
+
+
+movie_genres_table = db.Table(
+    'movies_genres',
+    db.Column(
+        'genre_id', db.Integer,
+        db.ForeignKey('genres.genre_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    )
+)
+
+
+movie_awards_table = db.Table(
+    'movies_awards',
+    db.Column(
+        'award_id', db.Integer,
+        db.ForeignKey('awards.award_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    )
+)
+
+
+movie_directors_table = db.Table(
+    'movies_directors',
+    db.Column(
+        'director_id', db.Integer,
+        db.ForeignKey('directors.director_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    )
+)
+
+
+user_movie_ratings_table = db.Table(
+    db.Column(
+        'user_id', db.Integer,
+        db.ForeignKey('users.user_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'movie_id', db.Integer,
+        db.ForeignKey('movies.movie_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'rating', db.Numeric,
+        nullable=False
+    ),
+    db.Column(
+        'rating_date', db.DateTime,
+        default=datetime.datetime.utcnow
+    )
+)
