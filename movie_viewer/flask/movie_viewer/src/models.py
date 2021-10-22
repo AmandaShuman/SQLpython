@@ -1,3 +1,4 @@
+from enum import unique
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -63,3 +64,23 @@ class Director(db.Model):
     picture = db.Column(db.Text)
 
 
+class User(db.Model):
+    __tablename__ = 'users'
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(15),unique=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(320), unique=True, nullable=False)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    gender = db.Column(db.String(10))
+    birth_date = db.Column(db.Date)
+    profile_pic = db.Column(db.Text)
+    age = db.Column(db.Integer, nullable=False)
+
+
+class Mpa_rating(db.Model):
+    __tablename__ = 'MPA_ratings'
+    rating_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    rating = db.Column(db.String(10), nullable=False)
+    description_short = db.Column(db.String(100))
+    description_detailed = db.Column(db.Text)
