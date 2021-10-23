@@ -136,9 +136,9 @@ CREATE TABLE movies (
     movie TEXT NOT NULL,
     movie_subtitles TEXT,
     summary TEXT,
-    CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id),
-    CONSTRAINT fk_movie_resolution FOREIGN KEY (resolution_id) REFERENCES resolutions(resolution_id),
-    CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES MPA_ratings (rating_id)
+    CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie_resolution FOREIGN KEY (resolution_id) REFERENCES resolutions(resolution_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES MPA_ratings (rating_id) ON DELETE CASCADE
 );
 
 --
@@ -148,8 +148,8 @@ CREATE TABLE movies_trailers (
     trailer_id INT NOT NULL,
     movie_id INT NOT NULL,
     PRIMARY KEY(trailer_id, movie_id),
-    CONSTRAINT fk_trailer FOREIGN KEY (trailer_id) REFERENCES trailers(trailer_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_trailer FOREIGN KEY (trailer_id) REFERENCES trailers(trailer_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 --
@@ -159,8 +159,8 @@ CREATE TABLE movies_actors (
     actor_id INT NOT NULL,
     movie_id INT NOT NULL,
     PRIMARY KEY(actor_id, movie_id),
-    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES actors(actor_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES actors(actor_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 --
@@ -170,8 +170,8 @@ CREATE TABLE movies_genres (
     genre_id INT NOT NULL,
     movie_id INT NOT NULL,
     PRIMARY KEY(genre_id, movie_id),
-    CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 --
@@ -181,8 +181,8 @@ CREATE TABLE movies_awards (
     award_id INT NOT NULL,
     movie_id INT NOT NULL,
     PRIMARY KEY(award_id, movie_id),
-    CONSTRAINT fk_award FOREIGN KEY (award_id) REFERENCES awards(award_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_award FOREIGN KEY (award_id) REFERENCES awards(award_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 --
@@ -192,8 +192,8 @@ CREATE TABLE movies_directors (
     director_id INT NOT NULL,
     movie_id INT NOT NULL,
     PRIMARY KEY(director_id, movie_id),
-    CONSTRAINT fk_director FOREIGN KEY (director_id) REFERENCES directors(director_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_director FOREIGN KEY (director_id) REFERENCES directors(director_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 --
@@ -205,8 +205,8 @@ CREATE TABLE movie_ratings (
     rating NUMERIC NOT NULL,
     rating_date TIMESTAMP,
     PRIMARY KEY(user_id, movie_id),
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id),
-    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_movie FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 );
 
 -- Insert records
