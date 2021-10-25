@@ -31,8 +31,16 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate = Migrate(app, db)
 
-    # from .api import users, tweets
-    # app.register_blueprint(users.bp)
-    # app.register_blueprint(tweets.bp)
+    from .api import actors, awards, directors, formats, genres, movies, mpa_ratings, resolutions, trailers, users
+    app.register_blueprint(actors.bp)
+    app.register_blueprint(awards.bp)
+    app.register_blueprint(directors.bp)
+    app.register_blueprint(formats.bp)
+    app.register_blueprint(genres.bp)
+    app.register_blueprint(movies.bp)
+    app.register_blueprint(mpa_ratings.bp)
+    app.register_blueprint(resolutions.bp)
+    app.register_blueprint(trailers.bp)
+    app.register_blueprint(users.bp)
 
     return app
