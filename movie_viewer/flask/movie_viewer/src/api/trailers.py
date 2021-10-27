@@ -48,3 +48,14 @@ def create():
         return jsonify(t.serialize())
     except:
         return abort(400)
+
+
+@bp.route('/<int:id>', methods=['DELETE'])
+def delete(id: int):
+    t = Trailer.query.get_or_404(id)
+    try:
+        db.session.delete(t)
+        db.session.commit()
+        return jsonify(True)
+    except:
+        return jsonify(False)

@@ -581,3 +581,15 @@ INSERT INTO movies_directors VALUES
 
 INSERT INTO movie_ratings VALUES
 (1, 1, 7), (2, 1, 8);
+
+-- Change starting sequences of tables for Flask to accommodate for initial data
+ALTER SEQUENCE formats_format_id_seq RESTART WITH 12;
+ALTER SEQUENCE resolutions_resolution_id_seq RESTART WITH 8;
+ALTER SEQUENCE genres_genre_id_seq RESTART WITH 86;
+ALTER SEQUENCE MPA_ratings_rating_id_seq RESTART WITH 7;
+ALTER SEQUENCE trailers_trailer_id_seq RESTART WITH 25;
+ALTER SEQUENCE actors_actor_id_seq RESTART WITH 82;
+ALTER SEQUENCE awards_award_id_seq RESTART WITH 6;
+ALTER SEQUENCE directors_director_id_seq RESTART WITH 24;
+ALTER SEQUENCE users_user_id_seq RESTART WITH 3;
+ALTER SEQUENCE movies_movie_id_seq RESTART WITH 25;
