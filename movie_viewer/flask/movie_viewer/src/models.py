@@ -15,6 +15,17 @@ class Trailer(db.Model):
     trailer_url = db.Column(db.Text, nullable=False)
     trailer_name = db.Column(db.String(100), nullable=False)
 
+    def __init__(self, trailer_url: str, trailer_name: str):
+        self.trailer_url = trailer_url
+        self.trailer_name = trailer_name
+
+    def serialize(self):
+        return {
+            'trailer_id': self.trailer_id,
+            'trailer_url': self.trailer_url,
+            'trailer_name': self.trailer_name
+        }
+
 
 class Format(db.Model):
     __tablename__ = 'formats'
