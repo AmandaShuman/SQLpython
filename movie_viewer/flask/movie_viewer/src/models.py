@@ -50,6 +50,21 @@ class Resolution(db.Model):
     aspect_ratio = db.Column(db.String(10), nullable=False)
     num_p = db.Column(db.String(10))
 
+    def __init__(self, resolution: str, pixel_size: str, aspect_ratio: str, num_p: str):
+        self.resolution = resolution
+        self.pixel_size = pixel_size
+        self.aspect_ratio = aspect_ratio
+        self.num_p = num_p  
+
+    def serialize(self):
+        return {
+            'resolution_id': self.resolution_id,
+            'resolution': self.resolution,
+            'pixel_size': self.pixel_size,
+            'aspect_ratio': self.aspect_ratio,
+            'num_p': self.num_p
+        }  
+
 
 class Actor(db.Model):
     __tablename__ = 'actors'
@@ -60,6 +75,23 @@ class Actor(db.Model):
     birth_date = db.Column(db.Date)
     picture = db.Column(db.Text)
 
+    def __init__(self, first_name: str, last_name: str, gender: str, birth_date: datetime.date, picture: str):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.birth_date = birth_date
+        self.picture = picture
+
+    def serialize(self):
+        return {
+            'actor_id': self.actor_id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'gender': self.gender,
+            'birth_date': self.birth_date,
+            'picture': self.picture
+        }
+
 
 class Genre(db.Model):
     __tablename__ = 'genres'
@@ -68,11 +100,33 @@ class Genre(db.Model):
     subgenre = db.Column(db.String(25))
     description = db.Column(db.Text)
 
+    def __init__(self, genre: str, subgenre: str, description: str):
+        self.genre = genre
+        self.subgenre = subgenre
+        self.description = description
+
+    def serialize(self):
+        return {
+            'genre_id': self.genre_id,
+            'genre': self.genre,
+            'subgenre': self.subgenre,
+            'description': self.description
+        }
+
 
 class Award(db.Model):
     __tablename__ = 'awards'
     award_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     award = db.Column(db.String(150), nullable=False)
+
+    def __init__(self, award: str):
+        self.award = award
+
+    def serialize(self):
+        return {
+            'award_id': self.award_id,
+            'award': self.award
+        }
 
 
 class Director(db.Model):
@@ -83,6 +137,23 @@ class Director(db.Model):
     gender = db.Column(db.String(10))
     birth_date = db.Column(db.Date)
     picture = db.Column(db.Text)
+
+    def __init__(self, first_name: str, last_name: str, gender: str, birth_date: datetime.date, picture: str):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.birth_date = birth_date
+        self.picture = picture
+
+    def serialize(self):
+        return {
+            'director_id': self.actor_id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'gender': self.gender,
+            'birth_date': self.birth_date,
+            'picture': self.picture
+        }
 
 
 class User(db.Model):
@@ -98,6 +169,31 @@ class User(db.Model):
     profile_pic = db.Column(db.Text)
     age = db.Column(db.Integer, nullable=False)
 
+    def __init__(self, username: str, password: str, email: str, first_name: str, last_name: str, gender: str, birth_date: datetime.date, profile_pic: str, age: int):
+        self.username: username
+        self.password: password
+        self.email: email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.birth_date = birth_date
+        self.profile_pic = profile_pic
+        self.age = age
+
+    def serialize(self):
+        return {
+            'user_id': self.user_id,
+            'username': self.username,
+            'password': self.password,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'gender': self.gender,
+            'birth_date': self.birth_date,
+            'proflie_pic': self.profile_pic,
+            'age': self.age
+        }
+
 
 class Mpa_rating(db.Model):
     __tablename__ = 'MPA_ratings'
@@ -105,6 +201,19 @@ class Mpa_rating(db.Model):
     rating = db.Column(db.String(10), nullable=False)
     description_short = db.Column(db.String(100))
     description_detailed = db.Column(db.Text)
+
+    def __init__(self, rating: str, description_short: str, description_detailed: str):
+        self.rating = rating
+        self.description_short = description_short
+        self.description_detailed = description_detailed
+
+    def serialize(self):
+        return {
+            'rating_id': self.rating_id,
+            'rating': self.rating,
+            'description_short': self.description_short,
+            'description_detailed': self.description_detailed
+        }
 
 
 class Movie(db.Model):
@@ -133,6 +242,36 @@ class Movie(db.Model):
     movie = db.Column(db.Text, nullable=False)
     movie_subtitles = db.Column(db.Text)
     summary = db.Column(db.Text)
+
+    def __init__(self, title: str, year: int, length_min: int, studio: str, format_id: int, resolution_id: int, rating_id: int, cover: str, movie: str, movie_subtitles: str, summary: str):
+        self.title = title
+        self.year = year
+        self.length_min = length_min
+        self.studio = studio
+        self.format_id = format_id
+        self.resolution_id = resolution_id
+        self.rating_id = rating_id
+        self.cover = cover
+        self.movie = movie
+        self.movie_subtitles = movie_subtitles
+        self.summary = summary
+
+    def serialize(self):
+        return {
+            'movie_id': self.movie_id,
+            'title': self.title,
+            'year': self.year,
+            'length_min': self.length_min,
+            'studio': self.studio,
+            'format_id': self.format_id,
+            'resolution_id': self.resolution_id,
+            'rating_id': self.rating_id,
+            'cover': self.cover,
+            'movie': self.movie,
+            'movie_subtitles': self.movie_subtitles,
+            'summary': self.summary
+        }
+
 
 
 movie_trailers_table = db.Table(
