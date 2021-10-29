@@ -32,6 +32,15 @@ class Format(db.Model):
     format_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     extension = db.Column(db.String(10), nullable=False)
 
+    def __init__(self, extension: str):
+        self.extension = extension
+
+    def serialize(self):
+        return {
+            'format_id': self.format_id,
+            'extension': self.extension
+        }
+
 
 class Resolution(db.Model):
     __tablename__ = 'resolutions'
