@@ -45,7 +45,7 @@ class Format(db.Model):
 class Resolution(db.Model):
     __tablename__ = 'resolutions'
     resolution_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    resoution = db.Column(db.String(40), nullable=False)
+    resolution = db.Column(db.String(40), nullable=False)
     pixel_size = db.Column(db.String(15), nullable=False)
     aspect_ratio = db.Column(db.String(10), nullable=False)
     num_p = db.Column(db.String(10))
@@ -271,7 +271,6 @@ class Movie(db.Model):
             'movie_subtitles': self.movie_subtitles,
             'summary': self.summary
         }
-
 
 
 movie_trailers_table = db.Table(
