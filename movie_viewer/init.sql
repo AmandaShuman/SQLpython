@@ -588,7 +588,7 @@ ALTER SEQUENCE resolutions_resolution_id_seq RESTART WITH 8;
 ALTER SEQUENCE genres_genre_id_seq RESTART WITH 86;
 ALTER SEQUENCE MPA_ratings_rating_id_seq RESTART WITH 7;
 ALTER SEQUENCE trailers_trailer_id_seq RESTART WITH 25;
-ALTER SEQUENCE actors_actor_id_seq RESTART WITH 82;
+ALTER SEQUENCE actors_actor_id_seq RESTART WITH 83;
 ALTER SEQUENCE awards_award_id_seq RESTART WITH 6;
 ALTER SEQUENCE directors_director_id_seq RESTART WITH 24;
 ALTER SEQUENCE users_user_id_seq RESTART WITH 3;
