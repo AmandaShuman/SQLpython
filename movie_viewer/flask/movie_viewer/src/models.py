@@ -147,7 +147,7 @@ class Director(db.Model):
 
     def serialize(self):
         return {
-            'director_id': self.actor_id,
+            'director_id': self.director_id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'gender': self.gender,

@@ -34,7 +34,6 @@ def show(id: int):
         return abort(400)
 
 
-# figure out optional parameters
 @bp.route('', methods=['POST'])
 def create():
     if 'first_name' not in request.json or 'last_name' not in request.json:
@@ -66,7 +65,6 @@ def create():
     return jsonify(a.serialize())
 
 
-# Test this route in insomnia
 @bp.route('/<int:id>', methods=['DELETE'])
 def delete(id: int):
     a = Actor.query.get_or_404(id)
