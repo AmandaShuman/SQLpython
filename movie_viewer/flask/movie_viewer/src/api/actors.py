@@ -39,12 +39,27 @@ def show(id: int):
 def create():
     if 'first_name' not in request.json or 'last_name' not in request.json:
         return abort(400)
+
+    first_name = request.json['first_name'],
+    last_name = request.json['last_name'],
+    if 'gender' in request.json:
+        gender = request.json['gender']
+    else: 
+        gender = None
+    if 'birth_date' in request.json:
+        birth_date = request.json['birth_date']
+    else:
+        birth_date = None
+    if 'picture' in request.json:
+        picture = request.json['picture']
+    else:
+        picture = None
     a = Actor(
-        first_name=request.json['first_name'],
-        last_name=request.json['last_name'],
-        gender=request.json['gender'],
-        birth_date=request.json['birth_date'],
-        picture=request.json['picture']    
+        first_name,
+        last_name,
+        gender,
+        birth_date,
+        picture,
     )
     db.session.add(a)
     db.session.commit()
