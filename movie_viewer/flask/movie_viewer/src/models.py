@@ -196,11 +196,11 @@ class User(db.Model):
 
 
 class Mpa_rating(db.Model):
-    __tablename__ = 'MPA_ratings'
+    __tablename__ = 'mpa_ratings'
     rating_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     rating = db.Column(db.String(10), nullable=False)
-    description_short = db.Column(db.String(100))
-    description_detailed = db.Column(db.Text)
+    description_short = db.Column(db.String(100), nullable=False)
+    description_detailed = db.Column(db.Text, nullable=False)
 
     def __init__(self, rating: str, description_short: str, description_detailed: str):
         self.rating = rating
