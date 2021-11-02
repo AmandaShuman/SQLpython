@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS movies_directors;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS movies_ratings;
-DROP TABLE IF EXISTS MPA_ratings;
+DROP TABLE IF EXISTS mpa_ratings;
 
 --
 -- Name: trailers; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
@@ -111,9 +111,9 @@ CREATE TABLE users (
 );
 
 --
--- Name: MPA_ratings; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
+-- Name: mpa_ratings; Type: TABLE; Schema: public; Owner: Amanda_Shuman; Tablespace: 
 --
-CREATE TABLE MPA_ratings (
+CREATE TABLE mpa_ratings (
     rating_id SERIAL PRIMARY KEY,
     rating TEXT NOT NULL,
     description_short TEXT NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE movies (
     summary TEXT,
     CONSTRAINT fk_movie_format FOREIGN KEY (format_id) REFERENCES formats (format_id) ON DELETE CASCADE,
     CONSTRAINT fk_movie_resolution FOREIGN KEY (resolution_id) REFERENCES resolutions(resolution_id) ON DELETE CASCADE,
-    CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES MPA_ratings (rating_id) ON DELETE CASCADE
+    CONSTRAINT fk_movie_rating FOREIGN KEY (rating_id) REFERENCES mpa_ratings (rating_id) ON DELETE CASCADE
 );
 
 --
@@ -310,7 +310,7 @@ INSERT INTO genres VALUES
     (84, 'Adventure', 'Pirate films'),
     (85, 'Adventure', 'Survival films');
 
-INSERT INTO MPA_ratings VALUES
+INSERT INTO mpa_ratings VALUES
 (1, 'G', 'General Audiences', 'All ages admitted. Nothing that would offend parents for viewing by children.'),
 (2, 'PG', 'Parental Guidance Suggested', 'Some material may not be suitable for children. Parents urged to give "parental guidance". May contain some material parents might not like for their young children.'),
 (3, 'PG-13', 'Parents Strongly Cautioned', 'Some material may be inappropriate for children under 13. Parents are urged to be cautious. Some material may be inappropriate for pre-teenagers.'),
@@ -586,7 +586,7 @@ INSERT INTO movie_ratings VALUES
 ALTER SEQUENCE formats_format_id_seq RESTART WITH 12;
 ALTER SEQUENCE resolutions_resolution_id_seq RESTART WITH 8;
 ALTER SEQUENCE genres_genre_id_seq RESTART WITH 86;
-ALTER SEQUENCE MPA_ratings_rating_id_seq RESTART WITH 7;
+ALTER SEQUENCE mpa_ratings_rating_id_seq RESTART WITH 7;
 ALTER SEQUENCE trailers_trailer_id_seq RESTART WITH 25;
 ALTER SEQUENCE actors_actor_id_seq RESTART WITH 83;
 ALTER SEQUENCE awards_award_id_seq RESTART WITH 6;
