@@ -170,9 +170,9 @@ class User(db.Model):
     age = db.Column(db.Integer, nullable=False)
 
     def __init__(self, username: str, password: str, email: str, first_name: str, last_name: str, gender: str, birth_date: datetime.date, profile_pic: str, age: int):
-        self.username: username
-        self.password: password
-        self.email: email
+        self.username = username
+        self.password = password
+        self.email = email
         self.first_name = first_name
         self.last_name = last_name
         self.gender = gender
